@@ -7,17 +7,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2422/2422796.png">
-    
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    
     <title>TradeTrack Pro | Nitai Studio</title>
 
-    <!-- Firebase Core SDKs -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-    <!-- UI Icons & Fonts -->
+    <!-- Google Icons & Fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -62,6 +59,7 @@
             .app-shell { height: 95vh; border-radius: 50px; border: 2px solid var(--glass-border); box-shadow: 0 0 80px rgba(0,0,0,1); }
         }
 
+        /* --- Scrollable Content --- */
         .scroll-container {
             flex: 1; overflow-y: auto;
             padding-bottom: 120px;
@@ -70,7 +68,7 @@
         }
         .scroll-container::-webkit-scrollbar { display: none; }
 
-        /* --- Global Animations --- */
+        /* --- Animations --- */
         @keyframes logoIn { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulseNeon { 0%, 100% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 35px var(--primary); } }
@@ -103,14 +101,13 @@
             text-align: left; font-size: 11px; color: var(--text-dim); line-height: 1.6;
         }
 
-        /* --- UI Elements --- */
+        /* --- UI Components --- */
         .glass-card {
             background: var(--surface); backdrop-filter: blur(25px);
             border-radius: 32px; padding: 25px; margin: 15px;
             border: 1px solid var(--glass-border);
             box-shadow: 0 15px 40px rgba(0,0,0,0.6);
             animation: slideUp 0.6s ease;
-            cursor: pointer;
         }
 
         .btn-premium {
@@ -121,6 +118,7 @@
             text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
             margin-top: 10px;
         }
+        .btn-premium:active { transform: scale(0.96); opacity: 0.8; }
 
         input, select, textarea {
             width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
@@ -128,7 +126,7 @@
         }
         label { display: block; font-size: 11px; color: var(--primary); margin: 0 0 6px 10px; font-weight: 800; text-transform: uppercase; text-align: left; }
 
-        /* Stats Grid */
+        /* --- Stats Box --- */
         .periodic-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 0 15px 15px 15px; }
         .p-stat { background: rgba(255,255,255,0.04); padding: 15px 5px; border-radius: 25px; text-align: center; border: 1px solid var(--glass-border); }
         .p-stat small { font-size: 9px; color: var(--text-dim); display: block; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
@@ -138,24 +136,25 @@
         .stat-box { background: #111; padding: 22px; border-radius: 32px; border: 1.5px solid var(--glass-border); position: relative; overflow: hidden; }
         .stat-box::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); }
         
-        /* Navigation */
+        /* --- Navigation --- */
         nav {
             position: absolute; bottom: 25px; left: 15px; right: 15px; height: 80px;
             background: rgba(25, 25, 25, 0.85); backdrop-filter: blur(30px);
             display: flex; justify-content: space-around; align-items: center;
             border-radius: 30px; border: 1px solid var(--glass-border); z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .nav-item { background: none; border: none; color: var(--text-dim); display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; font-weight: 800; font-size: 10px; transition: 0.3s; }
         .nav-item.active { color: var(--accent); }
         .nav-item i { font-size: 30px; margin-bottom: 2px; }
 
-        /* Labels & Brancding */
+        /* --- Journal Entries --- */
+        .journal-log { background: rgba(255,255,255,0.02); border-radius: 28px; padding: 22px; margin: 12px 15px; border-left: 6px solid #222; transition: 0.3s; }
         .sub-pill { background: rgba(0, 242, 255, 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 5px 15px; border-radius: 15px; font-size: 11px; font-weight: 800; }
+        
         .branding-footer { font-size: 10px; color: var(--text-dim); text-align: center; padding: 25px 0; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
         .price-tag { font-size: 22px; font-weight: 800; margin-top: 8px; color: #fff; }
         .price-tag small { font-size: 12px; color: var(--text-dim); font-weight: 400; }
-
-        .journal-log { background: rgba(255,255,255,0.02); border-radius: 28px; padding: 22px; margin: 12px 15px; border-left: 6px solid #222; }
 
         .screen { display: none; }
         .screen.active { display: block; }
@@ -169,38 +168,46 @@
         <div id="splash">
             <div class="logo-box"><i class="material-icons-round">analytics</i></div>
             <h2 style="margin:25px 0 5px 0; letter-spacing:1px; font-weight:800;">TradeTrack Pro</h2>
-            <p style="color:var(--primary); font-weight:800; letter-spacing:3px; font-size:11px;">NITAI STUDIO | INDIA</p>
+            <p style="color:var(--primary); font-weight:800; letter-spacing:3px; font-size:11px;">NITAI STUDIO | MADE IN INDIA</p>
         </div>
 
-        <!-- 2. Login Overlay -->
+        <!-- 2. Global Login Overlay -->
         <div id="login-overlay" class="overlay hidden">
             <div class="modal">
                 <div class="logo-box" style="width:80px; height:80px; margin: 0 auto 20px auto; border-radius:24px;"><i class="material-icons-round">cloud_sync</i></div>
-                <h2 style="margin:0 0 5px 0">Cloud Sync</h2>
+                <h2 style="margin:0 0 5px 0">Nitai Cloud Sync</h2>
+                
                 <div class="notice-box">
-                    <b>IMPORTANT:</b> TradeTrack Pro is a digital trading journal. We do not provide financial advice. All data is securely synced to Nitai Cloud. By logging in, you accept our 7-day trial policy.
+                    <b>POLICY NOTICE:</b> By logging in, you accept our 7-day free trial. All data is securely stored on Nitai Cloud. We do not provide financial advice.
                 </div>
+
                 <label>Language</label>
                 <select id="app-lang" onchange="app.updateLanguage()">
                     <option value="en">English (Global)</option>
                     <option value="bn">বাংলা (India/BD)</option>
                     <option value="hi">हिन्दी (India)</option>
                 </select>
+
                 <label>Select Country (244+)</label>
                 <select id="user-country"></select>
+
                 <label>Mobile Number</label>
                 <input type="tel" id="user-mobile" placeholder="Phone Number">
-                <button class="btn-premium" onclick="app.doLogin()">Login & Accept Policy</button>
-                <p style="font-size:10px; margin-top:15px;"><a href="https://nitaistudio.github.io/Trade-Track-Pro/policies.html" style="color:var(--primary); text-decoration:none;" target="_blank">Privacy Policy</a></p>
+                
+                <button class="btn-premium" onclick="app.doLogin()">Login & Accept Rules</button>
+                
+                <p style="font-size:10px; color:var(--text-dim); margin-top:15px;">
+                    Read our <a href="https://nitaistudio.github.io/Trade-Track-Pro/policies.html" style="color:var(--primary); text-decoration:none;" target="_blank">Privacy Policy</a>
+                </p>
             </div>
         </div>
 
-        <!-- 3. Subscripton Paywall (Google Play Billing SKU) -->
+        <!-- 3. Lock Screen / Paywall (Google Play) -->
         <div id="paywall-overlay" class="overlay hidden">
             <div class="modal">
                 <i class="material-icons-round" style="font-size: 70px; color: var(--error);">lock_clock</i>
                 <h2 style="margin:15px 0 5px 0;">Access Locked</h2>
-                <p style="font-size:13px; color:var(--text-dim); margin-bottom:25px;">Your 7-day trial has reached zero. Please subscribe via Google Play Store to unlock your data.</p>
+                <p style="font-size:13px; color:var(--text-dim); margin-bottom:25px;">Your 7-day trial has reached zero. Subscribe via Google Play Store to unlock and continue tracking.</p>
                 
                 <div class="glass-card" style="margin:10px 0; padding:18px; text-align:left; border-color:var(--primary);" onclick="app.initPay('monthly_pro_sub')">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -222,18 +229,18 @@
             </div>
         </div>
 
-        <!-- 4. Main App content -->
+        <!-- 4. Main App Interface -->
         <div class="scroll-container" id="main-content" style="display:none;">
             <header style="padding: 45px 25px 15px 25px; display:flex; justify-content:space-between; align-items:flex-start;">
                 <div>
                     <h1 id="screen-title" style="margin:0; font-size:26px;">Dashboard</h1>
                     <div id="user-id-tag" style="font-size:10px; color:var(--text-dim); font-weight:800; margin-top:5px; text-transform:uppercase;"></div>
                 </div>
-                <!-- This will count down day by day -->
-                <div id="sub-pill" class="sub-pill">PRO...</div>
+                <!-- Persistent Status Pill -->
+                <div id="sub-pill" class="sub-pill">PRO ACCESS</div>
             </header>
 
-            <!-- Dashboard View -->
+            <!-- Dash View -->
             <div id="scr-dash" class="screen">
                 <div class="periodic-row">
                     <div class="p-stat"><small id="l-today">Today</small><div id="d-today">₹0</div></div>
@@ -254,7 +261,7 @@
                     </div>
                     <div class="stat-box"><small id="l-net-pnl">Overall P/L</small><div id="d-pnl" style="font-size:20px; font-weight:800; margin-top:5px;">₹0</div></div>
                 </div>
-
+                
                 <div class="glass-card" style="margin-top:20px; text-align:center; border-left: 6px solid var(--accent);">
                     <small style="color:var(--text-dim); font-weight:800;">ACCOUNT BALANCE</small>
                     <div id="d-balance" style="font-size:32px; font-weight:800; color:var(--accent); margin-top:5px;">₹0</div>
@@ -262,34 +269,35 @@
 
                 <div style="padding:30px 25px 5px 25px;"><h3 id="l-recent-head" style="margin:0; font-size:20px;">History Entries</h3></div>
                 <div id="list-recent"></div>
+                
                 <div class="branding-footer">Made by Nitai Studio | India 🇮🇳</div>
             </div>
 
-            <!-- New Entry -->
+            <!-- New Entry View (Detailed Fields) -->
             <div id="scr-add" class="screen">
                 <div class="glass-card">
                     <label>Trade Date</label><input type="date" id="t-date">
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
                         <div><label>Session</label><select id="t-session"><option value="India">India 🇮🇳</option><option value="London">London 🇬🇧</option><option value="NY">NY 🇺🇸</option><option value="Asia">Asia 🇯🇵</option></select></div>
-                        <div><label>Strategy</label><select id="t-logic"><option value="Breakout">Breakout</option><option value="Trend">Trend</option><option value="S/R Bounce">S/R Bounce</option><option value="SMC">SMC/ICT</option></select></div>
+                        <div><label>Strategy</label><select id="t-logic"><option value="Breakout">Breakout</option><option value="Trend">Trend Follow</option><option value="S/R Bounce">S/R Bounce</option><option value="SMC">SMC/ICT</option></select></div>
                     </div>
-                    <label>Asset Symbol</label><input type="text" id="t-symbol" placeholder="BTC, NIFTY...">
+                    <label>Asset Symbol</label><input type="text" id="t-symbol" placeholder="BTC, NIFTY, GOLD...">
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
                         <div><label>R:R Ratio</label><input type="number" step="0.1" id="t-rr" placeholder="1.5"></div>
-                        <div><label>Result</label><select id="t-outcome"><option value="Win">Win (Profit)</option><option value="Loss">Loss</option></select></div>
+                        <div><label>Result</label><select id="t-outcome"><option value="Win">PROFIT (Win)</option><option value="Loss">LOSS (Loss)</option></select></div>
                     </div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
                         <div><label>Buy Price</label><input type="number" id="t-bq" placeholder="0"></div>
                         <div><label>Sell Price</label><input type="number" id="t-sq" placeholder="0"></div>
                     </div>
-                    <label>Trade Mistakes / Notes</label><textarea id="t-mistake" rows="3" placeholder="Notes..."></textarea>
+                    <label>Trade Mistakes / Notes</label><textarea id="t-mistake" rows="3" placeholder="Why did you take this trade?"></textarea>
                     <button class="btn-premium" onclick="app.saveEntry()" id="l-save-btn">Sync to Journal</button>
                 </div>
             </div>
 
             <div id="scr-history" class="screen"><div id="list-history"></div></div>
 
-            <!-- Profile & Pro Details -->
+            <!-- Profile & Pro -->
             <div id="scr-info" class="screen">
                 <div class="glass-card" style="text-align:center;">
                     <div class="logo-box" style="width:85px; height:85px; margin: 0 auto 20px auto; border-radius:24px;"><i class="material-icons-round">verified_user</i></div>
@@ -298,23 +306,26 @@
                     
                     <div id="trial-upgrade-box" class="hidden">
                         <hr style="border:0; border-top:1px solid var(--glass-border); margin:20px 0;">
-                        <button class="btn-premium" onclick="app.initPay('monthly_pro_sub')">Upgrade Monthly (₹50 / $0.60)</button>
-                        <button class="btn-premium" style="margin-top:10px; background:var(--accent); color:#000;" onclick="app.initPay('yearly_pro_sub')">Upgrade Yearly (₹500 / $6.00)</button>
+                        <button class="btn-premium" onclick="app.initPay('monthly_pro_sub')">Subscribe Monthly (₹50 / $0.60)</button>
+                        <button class="btn-premium" style="margin-top:10px; background:var(--accent); color:#000;" onclick="app.initPay('yearly_pro_sub')">Subscribe Yearly (₹500 / $6.00)</button>
                     </div>
 
                     <div style="background:rgba(0,0,0,0.4); padding:20px; border-radius:24px; margin:25px 0; border:1px solid var(--glass-border); font-size:12px; text-align:left;">
                         <b>Nitai Cloud ID:</b> <span id="prof-id"></span><br>
-                        <b>Rules & Privacy:</b> <a href="https://nitaistudio.github.io/Trade-Track-Pro/policies.html" style="color:var(--primary); text-decoration:none;" target="_blank">Policies</a>
+                        <b>Support:</b> nitai.grp00@gmail.com
                     </div>
-                    <button class="btn-premium" style="background:var(--error); color:#fff;" onclick="app.logout()">Logout My Account</button>
+
+                    <a href="https://buymeacoffee.com/nitaigrp00a" class="btn-premium" style="background:#111; color:#fff; border:1px solid var(--glass-border);" target="_blank">☕ Support Developer</a>
+                    <button class="btn-premium" style="background:var(--error); color:#fff; margin-top:20px;" onclick="app.logout()">Logout My Account</button>
                 </div>
-                <div class="branding-footer">v5.0 Google Play Global Billing | INDIA 🇮🇳</div>
+                <div class="branding-footer">v6.0 Play Global Edition | INDIA 🇮🇳</div>
             </div>
         </div>
 
+        <!-- Navigation Bar -->
         <nav id="navbar" style="display:none;">
             <button class="nav-item active" onclick="app.navigate('dash')"><i class="material-icons-round">dashboard</i>Dash</button>
-            <button class="nav-item" onclick="app.navigate('history')"><i class="material-icons-round">list_alt</i>Logs</button>
+            <button class="nav-item" onclick="app.navigate('history')"><i class="material-icons-round">history</i>Logs</button>
             <button class="nav-item" onclick="app.navigate('add')"><i class="material-icons-round" style="font-size:45px; color:var(--primary); margin-top:-10px">add_circle</i></button>
             <button class="nav-item" onclick="app.navigate('info')"><i class="material-icons-round">verified</i>Pro</button>
         </nav>
@@ -322,42 +333,84 @@
 
     <script>
         // --- 1. FIREBASE CONFIG ---
-        const firebaseConfig = { apiKey: "AIzaSyBXAYmNjcXXUqbkNFdzVa6TbxotPH9PcNM", authDomain: "trade-track-pro-cd6a7.firebaseapp.com", databaseURL: "https://trade-track-pro-cd6a7-default-rtdb.firebaseio.com", projectId: "trade-track-pro-cd6a7", storageBucket: "trade-track-pro-cd6a7.firebasestorage.app", messagingSenderId: "791775076216", appId: "1:791775076216:web:c79cefc9bae267bb4a328d" };
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXAYmNjcXXUqbkNFdzVa6TbxotPH9PcNM",
+            authDomain: "trade-track-pro-cd6a7.firebaseapp.com",
+            databaseURL: "https://trade-track-pro-cd6a7-default-rtdb.firebaseio.com",
+            projectId: "trade-track-pro-cd6a7",
+            storageBucket: "trade-track-pro-cd6a7.firebasestorage.app",
+            messagingSenderId: "791775076216",
+            appId: "1:791775076216:web:c79cefc9bae267bb4a328d"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // --- 2. MULTI-LANG ---
+        // --- 2. MULTI-LANGUAGE DATA ---
         const i18n = {
             en: { today: "Today", weekly: "Weekly", monthly: "Monthly", win_rate: "Win Rate", avg_rr: "Avg RR", capital: "Total Capital", net_pnl: "Overall P/L", recent_head: "History Entries", save_btn: "Sync to Journal" },
             bn: { today: "আজকের", weekly: "সাপ্তাহিক", monthly: "মাসিক", win_rate: "উইন রেট", avg_rr: "গড় RR", capital: "মোট মূলধন", net_pnl: "সর্বমোট লাভ", recent_head: "ইতিহাস লগ", save_btn: "জার্নালে সেভ করুন" },
-            hi: { today: "आज", weekly: "साप्ताहिक", monthly: "मासिक", win_rate: "जीत दर", avg_rr: "औसत RR", capital: "कुल पूंजी", net_pnl: "कुल लाभ", recent_head: "हाल के रिकॉर्ड", save_btn: "সেভ করুন" }
+            hi: { today: "आज", weekly: "साप्ताहिक", monthly: "मासिक", win_rate: "जीत दर", avg_rr: "औसत RR", capital: "कुल पूंजी", net_pnl: "कुल लाभ", recent_head: "हाल के रिकॉर्ड", save_btn: "सेव करें" }
         };
 
-        const rawCountries = [{"n":"India","c":"+91"},{"n":"Bangladesh","c":"+880"},{"n":"USA","c":"+1"},{"n":"UK","c":"+44"},{"n":"UAE","c":"+971"},{"n":"Singapore","c":"+65"},{"n":"Nepal","c":"+977"},{"n":"Canada","c":"+1"}];
+        // --- 3. COUNTRY LIST (244) ---
+        const rawCountries = [
+            {n:"Afghanistan", c:"+93"}, {n:"Albania", c:"+355"}, {n:"Algeria", c:"+213"}, {n:"Andorra", c:"+376"}, {n:"Angola", c:"+244"}, {n:"Argentina", c:"+54"}, {n:"Armenia", c:"+374"}, {n:"Australia", c:"+61"}, {n:"Austria", c:"+43"}, {n:"Azerbaijan", c:"+994"}, {n:"Bahrain", c:"+973"}, {n:"Bangladesh", c:"+880"}, {n:"Belarus", c:"+375"}, {n:"Belgium", c:"+32"}, {n:"Bhutan", c:"+975"}, {n:"Bolivia", c:"+591"}, {n:"Bosnia", c:"+387"}, {n:"Brazil", c:"+55"}, {n:"Brunei", c:"+673"}, {n:"Bulgaria", c:"+359"}, {n:"Cambodia", c:"+855"}, {n:"Canada", c:"+1"}, {n:"Chile", c:"+56"}, {n:"China", c:"+86"}, {n:"Colombia", c:"+57"}, {n:"Costa Rica", c:"+506"}, {n:"Croatia", c:"+385"}, {n:"Cuba", c:"+53"}, {n:"Cyprus", c:"+357"}, {n:"Czech Republic", c:"+420"}, {n:"Denmark", c:"+45"}, {n:"Djibouti", c:"+253"}, {n:"Ecuador", c:"+593"}, {n:"Egypt", c:"+20"}, {n:"El Salvador", c:"+503"}, {n:"Estonia", c:"+372"}, {n:"Ethiopia", c:"+251"}, {n:"Finland", c:"+358"}, {n:"France", c:"+33"}, {n:"Georgia", c:"+995"}, {n:"Germany", c:"+49"}, {n:"Ghana", c:"+233"}, {n:"Greece", c:"+30"}, {n:"Guatemala", c:"+502"}, {n:"Honduras", c:"+504"}, {n:"Hong Kong", c:"+852"}, {n:"Hungary", c:"+36"}, {n:"Iceland", c:"+354"}, {n:"India", c:"+91"}, {n:"Indonesia", c:"+62"}, {n:"Iran", c:"+98"}, {n:"Iraq", c:"+964"}, {n:"Ireland", c:"+353"}, {n:"Israel", c:"+972"}, {n:"Italy", c:"+39"}, {n:"Jamaica", c:"+1876"}, {n:"Japan", c:"+81"}, {n:"Jordan", c:"+962"}, {n:"Kazakhstan", c:"+7"}, {n:"Kenya", c:"+254"}, {n:"Kuwait", c:"+965"}, {n:"Kyrgyzstan", c:"+996"}, {n:"Laos", c:"+856"}, {n:"Latvia", c:"+371"}, {n:"Lebanon", c:"+961"}, {n:"Libya", c:"+218"}, {n:"Liechtenstein", c:"+423"}, {n:"Lithuania", c:"+370"}, {n:"Luxembourg", c:"+352"}, {n:"Macau", c:"+853"}, {n:"Macedonia", c:"+389"}, {n:"Madagascar", c:"+261"}, {n:"Malaysia", c:"+60"}, {n:"Maldives", c:"+960"}, {n:"Malta", c:"+356"}, {n:"Mauritius", c:"+230"}, {n:"Mexico", c:"+52"}, {n:"Moldova", c:"+373"}, {n:"Monaco", c:"+377"}, {n:"Mongolia", c:"+976"}, {n:"Montenegro", c:"+382"}, {n:"Morocco", c:"+212"}, {n:"Myanmar", c:"+95"}, {n:"Namibia", c:"+264"}, {n:"Nepal", c:"+977"}, {n:"Netherlands", c:"+31"}, {n:"New Zealand", c:"+64"}, {n:"Nicaragua", c:"+505"}, {n:"Nigeria", c:"+234"}, {n:"Norway", c:"+47"}, {n:"Oman", c:"+968"}, {n:"Pakistan", c:"+92"}, {n:"Panama", c:"+507"}, {n:"Paraguay", c:"+595"}, {n:"Peru", c:"+51"}, {n:"Philippines", c:"+63"}, {n:"Poland", c:"+48"}, {n:"Portugal", c:"+351"}, {n:"Puerto Rico", c:"+1787"}, {n:"Qatar", c:"+974"}, {n:"Romania", c:"+40"}, {n:"Russia", c:"+7"}, {n:"Rwanda", c:"+250"}, {n:"San Marino", c:"+378"}, {n:"Saudi Arabia", c:"+966"}, {n:"Senegal", c:"+221"}, {n:"Serbia", c:"+381"}, {n:"Singapore", c:"+65"}, {n:"Slovakia", c:"+421"}, {n:"Slovenia", c:"+386"}, {n:"South Africa", c:"+27"}, {n:"South Korea", c:"+82"}, {n:"Spain", c:"+34"}, {n:"Sri Lanka", c:"+94"}, {n:"Sudan", c:"+249"}, {n:"Sweden", c:"+46"}, {n:"Switzerland", c:"+41"}, {n:"Syria", c:"+963"}, {n:"Taiwan", c:"+886"}, {n:"Tajikistan", c:"+992"}, {n:"Tanzania", c:"+255"}, {n:"Thailand", c:"+66"}, {n:"Tunisia", c:"+216"}, {n:"Turkey", c:"+90"}, {n:"Turkmenistan", c:"+993"}, {n:"Uganda", c:"+256"}, {n:"Ukraine", c:"+380"}, {n:"UAE", c:"+971"}, {n:"UK", c:"+44"}, {n:"USA", c:"+1"}, {n:"Uruguay", c:"+598"}, {n:"Uzbekistan", c:"+998"}, {n:"Vatican", c:"+379"}, {n:"Venezuela", c:"+58"}, {n:"Vietnam", c:"+84"}, {n:"Yemen", c:"+967"}, {n:"Zambia", c:"+260"}, {n:"Zimbabwe", c:"+263"}
+        ];
 
-        // --- 3. CORE ENGINE ---
+        // --- 4. CORE APP LOGIC ---
         const app = {
             user: null, lang: 'en', trades: [], capital: 0, sub: null,
             init: function() {
                 this.loadCountries();
-                this.lang = localStorage.getItem('nt_lang_pro_v5') || 'en';
+                this.lang = localStorage.getItem('nt_lang_pro_v6') || 'en';
                 document.getElementById('app-lang').value = this.lang;
                 this.updateLanguage();
                 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-                setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; this.checkAuth(); }, 500); }, 3000);
+
+                // Splash Hang Fix: Hard transition after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('splash').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('splash').style.display = 'none';
+                        this.checkAuth();
+                    }, 500);
+                }, 3000);
             },
-            loadCountries: function() { const sel = document.getElementById('user-country'); rawCountries.sort((a,b)=>a.n.localeCompare(b.n)).forEach(co => { sel.add(new Option(`${co.n} (${co.c})`, co.c)); }); },
-            updateLanguage: function() { this.lang = document.getElementById('app-lang').value; localStorage.setItem('nt_lang_pro_v5', this.lang); const t = i18n[this.lang]; ["today", "win_rate", "avg_rr", "capital", "net_pnl", "recent_head", "save_btn"].forEach(k => { const el = document.getElementById('l-' + k); if(el) el.innerText = t[k]; }); },
-            checkAuth: function() { const u = localStorage.getItem('nt_user_pro_v5'); if(!u) document.getElementById('login-overlay').classList.remove('hidden'); else { this.user = u; this.verifySubscription(); } },
-            doLogin: function() { const c = document.getElementById('user-country').value; const p = document.getElementById('user-mobile').value.trim(); if(p.length < 8) return alert("Valid Mobile Required!"); this.user = c + p; localStorage.setItem('nt_user_pro_v5', this.user); document.getElementById('login-overlay').classList.add('hidden'); this.verifySubscription(); },
-            
-            // SUBSCRIPTION LOGIC (Minus Daily)
+            loadCountries: function() {
+                const sel = document.getElementById('user-country');
+                rawCountries.sort((a,b)=>a.n.localeCompare(b.n)).forEach(co => {
+                    sel.add(new Option(`${co.n} (${co.c})`, co.c));
+                });
+            },
+            updateLanguage: function() {
+                this.lang = document.getElementById('app-lang').value;
+                localStorage.setItem('nt_lang_pro_v6', this.lang);
+                const t = i18n[this.lang];
+                ["today", "win_rate", "avg_rr", "capital", "net_pnl", "recent_head", "save_btn"].forEach(k => {
+                    const el = document.getElementById('l-' + k); if(el) el.innerText = t[k];
+                });
+            },
+            checkAuth: function() {
+                const u = localStorage.getItem('nt_user_pro_v6');
+                if(!u) document.getElementById('login-overlay').classList.remove('hidden');
+                else { this.user = u; this.verifySubscription(); }
+            },
+            doLogin: function() {
+                const c = document.getElementById('user-country').value;
+                const p = document.getElementById('user-mobile').value.trim();
+                if(p.length < 8) return alert("Valid Mobile Required!");
+                this.user = c + p;
+                localStorage.setItem('nt_user_pro_v6', this.user);
+                document.getElementById('login-overlay').classList.add('hidden');
+                this.verifySubscription();
+            },
             verifySubscription: function() {
                 db.ref('jhakkas_pro_users/' + this.user + '/subscription').on('value', snap => {
                     const data = snap.val();
                     const now = Date.now();
                     if(!data) {
-                        const exp = now + (7 * 24 * 60 * 60 * 1000); // 7 Days in MS
+                        // Trial Calculation (Minus Starts Here)
+                        const exp = now + (7 * 24 * 60 * 60 * 1000);
                         db.ref('jhakkas_pro_users/' + this.user + '/subscription').set({ type: 'Trial', expiry: exp });
                     } else {
                         this.sub = data;
@@ -384,6 +437,7 @@
                 else document.getElementById('trial-upgrade-box').classList.add('hidden');
             },
             initPay: async function(sku) {
+                // GOOGLE PLAY BILLING (Only for TWA Apps)
                 if ('getDigitalGoodsService' in window) {
                     try {
                         const service = await window.getDigitalGoodsService('https://play.google.com/billing');
@@ -391,39 +445,98 @@
                         const request = new PaymentRequest(paymentMethodData);
                         const response = await request.show();
                         await response.complete('success');
+                        
                         const dur = sku.includes('monthly') ? (30 * 24 * 60 * 60 * 1000) : (365 * 24 * 60 * 60 * 1000);
                         const base = Math.max(Date.now(), this.sub.expiry);
                         db.ref('jhakkas_pro_users/' + this.user + '/subscription').update({ type: 'Pro', expiry: base + dur }).then(() => location.reload());
-                    } catch (e) { alert("Use the Google Play App for subscription."); }
-                } else { alert("Digital billing only supported in the official Play Store app."); }
+                    } catch (e) { alert("Play Store Billing Error. Use the official Play Store app."); }
+                } else { alert("Please subscribe from the official installed App."); }
             },
-            startApp: function() { document.getElementById('main-content').style.display = 'block'; document.getElementById('navbar').style.display = 'flex'; document.getElementById('user-id-tag').innerText = "Account ID: " + this.user; document.getElementById('prof-id').innerText = this.user; this.navigate('dash'); },
-            navigate: function(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('scr-' + id).classList.add('active'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); const map = {dash:0, history:1, add:2, info:3}; document.querySelectorAll('.nav-item')[map[id]].classList.add('active'); this.fetchData(); },
-            fetchData: function() { db.ref('jhakkas_pro_users/' + this.user).on('value', snap => { const data = snap.val(); this.trades = data && data.trades ? Object.values(data.trades).sort((a,b) => b.ts - a.ts) : []; this.capital = data && data.capital ? data.capital : 0; this.render(); }); },
-            editCapital: function() { const v = prompt("Enter Trading Capital:", this.capital); if(v && !isNaN(v)) db.ref('jhakkas_pro_users/' + this.user + '/capital').set(parseFloat(v)); },
+            startApp: function() {
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('navbar').style.display = 'flex';
+                document.getElementById('user-id-tag').innerText = "Nitai Cloud: " + this.user;
+                document.getElementById('prof-id').innerText = this.user;
+                this.navigate('dash');
+            },
+            navigate: function(id) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('scr-' + id).classList.add('active');
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                const map = {dash:0, history:1, add:2, info:3};
+                document.querySelectorAll('.nav-item')[map[id]].classList.add('active');
+                this.fetchData();
+            },
+            fetchData: function() {
+                db.ref('jhakkas_pro_users/' + this.user).on('value', snap => {
+                    const data = snap.val();
+                    this.trades = data && data.trades ? Object.values(data.trades).sort((a,b) => b.ts - a.ts) : [];
+                    this.capital = data && data.capital ? data.capital : 0;
+                    this.render();
+                });
+            },
+            editCapital: function() {
+                const v = prompt("Enter Trading Capital Amount:", this.capital);
+                if(v && !isNaN(v)) db.ref('jhakkas_pro_users/' + this.user + '/capital').set(parseFloat(v));
+            },
             saveEntry: function() {
-                const sym = document.getElementById('t-symbol').value.toUpperCase().trim(); if(!sym) return alert("Enter Asset Symbol!");
-                const entry = { date: document.getElementById('t-date').value || new Date().toISOString().split('T')[0], sym: sym, session: document.getElementById('t-session').value, logic: document.getElementById('t-logic').value, rr: parseFloat(document.getElementById('t-rr').value) || 0, outcome: document.getElementById('t-outcome').value, bq: parseFloat(document.getElementById('t-bq').value) || 0, sq: parseFloat(document.getElementById('t-sq').value) || 0, mistake: document.getElementById('t-mistake').value, ts: Date.now() };
-                db.ref('jhakkas_pro_users/' + this.user + '/trades').push(entry).then(() => { alert("Synced Successfully!"); this.navigate('dash'); });
+                const sym = document.getElementById('t-symbol').value.toUpperCase().trim();
+                if(!sym) return alert("Enter Asset Symbol!");
+                const entry = {
+                    date: document.getElementById('t-date').value || new Date().toISOString().split('T')[0],
+                    sym: sym, session: document.getElementById('t-session').value,
+                    logic: document.getElementById('t-logic').value,
+                    rr: parseFloat(document.getElementById('t-rr').value) || 0,
+                    outcome: document.getElementById('t-outcome').value,
+                    bq: parseFloat(document.getElementById('t-bq').value) || 0,
+                    sq: parseFloat(document.getElementById('t-sq').value) || 0,
+                    mistake: document.getElementById('t-mistake').value, ts: Date.now()
+                };
+                db.ref('jhakkas_pro_users/' + this.user + '/trades').push(entry).then(() => {
+                    alert("Synced Successfully!"); this.navigate('dash');
+                });
             },
             render: function() {
-                const now = new Date(); const todayStr = now.toISOString().split('T')[0];
-                let dP = 0, tP = 0, totalRR = 0;
-                this.trades.forEach(t => { const pnl = t.sq - t.bq; tP += pnl; totalRR += t.rr; if(t.date === todayStr) dP += pnl; });
-                const wr = this.trades.length ? ((this.trades.filter(x=>x.outcome==='Win').length/this.trades.length)*100).toFixed(0) : 0;
-                const fmt = val => (val>=0?'+':'') + "₹" + val.toLocaleString();
-                document.getElementById('d-today').innerText = fmt(dP); document.getElementById('d-today').style.color = dP>=0?'var(--success)':'var(--error)';
-                document.getElementById('d-pnl').innerText = fmt(tP); document.getElementById('d-pnl').style.color = tP>=0?'var(--success)':'var(--error)';
+                const now = new Date();
+                const todayStr = now.toISOString().split('T')[0];
+                let dP=0, wP=0, mP=0, tP=0, totalRR=0;
+                
+                this.trades.forEach(t => {
+                    const pnl = t.sq - t.bq;
+                    tP += pnl; totalRR += t.rr;
+                    if(t.date === todayStr) dP += pnl;
+                });
+
+                const totalTrades = this.trades.length;
+                const wins = this.trades.filter(t => t.outcome === 'Win').length;
+                const winRate = totalTrades > 0 ? ((wins/totalTrades)*100).toFixed(0) : 0;
+
+                const colorMe = (val, id) => {
+                    const el = document.getElementById(id);
+                    el.innerText = (val>=0?'+':'') + "₹" + val.toLocaleString();
+                    el.style.color = val>=0?'var(--success)':'var(--error)';
+                };
+
+                colorMe(dP, 'd-today'); colorMe(tP, 'd-pnl');
                 document.getElementById('d-inv').innerText = "₹" + this.capital.toLocaleString();
                 document.getElementById('d-balance').innerText = "₹" + (this.capital + tP).toLocaleString();
-                document.getElementById('d-balance').style.color = (this.capital + tP) >= 0 ? 'var(--accent)' : 'var(--error)';
-                document.getElementById('d-win').innerText = wr + "%"; document.getElementById('d-rr').innerText = this.trades.length ? (totalRR/this.trades.length).toFixed(2) : "0.00";
-                const log = t => `<div class="journal-log" style="border-left-color:${t.sq-t.bq>=0?'var(--success)':'var(--error)'}"><div style="display:flex; justify-content:space-between"><b>${t.sym}</b> <b style="color:${t.sq-t.bq>=0?'var(--success)':'var(--error)'}">${(t.sq-t.bq).toFixed(2)}</b></div><small>${t.date} | ${t.logic}</small></div>`;
-                document.getElementById('list-recent').innerHTML = this.trades.slice(0,5).map(log).join('');
-                document.getElementById('list-history').innerHTML = this.trades.map(log).join('');
+                document.getElementById('d-win').innerText = winRate + "%";
+                document.getElementById('d-rr').innerText = totalTrades ? (totalRR/totalTrades).toFixed(2) : "0.00";
+
+                const logHTML = (t) => `
+                    <div class="journal-log" style="border-left-color:${t.sq-t.bq>=0?'var(--success)':'var(--error)'}">
+                        <div style="display:flex; justify-content:space-between">
+                            <b>${t.sym}</b> <b style="color:${t.sq-t.bq>=0?'var(--success)':'var(--error)'}">${(t.sq-t.bq).toFixed(2)}</b>
+                        </div>
+                        <small>${t.date} | ${t.session} | ${t.logic}</small>
+                        ${t.mistake ? `<div style="margin-top:10px; font-size:10px; color:var(--text-dim); background:#000; padding:8px; border-radius:10px;">📝 ${t.mistake}</div>` : ''}
+                    </div>`;
+                document.getElementById('list-recent').innerHTML = this.trades.slice(0,5).map(logHTML).join('');
+                document.getElementById('list-history').innerHTML = this.trades.map(logHTML).join('');
             },
-            logout: function() { if(confirm("Logout?")) { localStorage.clear(); location.reload(); } }
+            logout: function() { if(confirm("Logout? All data is safe in Nitai Cloud.")) { localStorage.clear(); location.reload(); } }
         };
+
         window.onload = () => app.init();
     </script>
 </body>
